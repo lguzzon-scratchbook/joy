@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node start.js",
-    "build": "cat ./node_modules/gun/examples/jquery.js ./node_modules/gun/gun.js ./node_modules/gun/sea.js ./node_modules/gun/as.js > joy.min.js && cp ./node_modules/gun/examples/style.css ./joy.css",
+    "build": "npm run build-min && cp ./dist-min/joy.js ./joy.min.js && cp ./dist-min/joy.css .",
+    "build-pre": "([ -d ./dist-pre ] && rm -rf ./dist-pre) ; mkdir -p ./dist-pre && cat ./node_modules/gun/examples/jquery.js ./node_modules/gun/gun.js ./node_modules/gun/sea.js ./node_modules/gun/as.js > ./dist-pre/joy.js && cp ./node_modules/gun/examples/style.css ./dist-pre/joy.css",
+    "build-min": "npm run build-pre && ([ -d ./dist-min ] && rm -rf ./dist-min) ; mkdir -p ./dist-min && npx --yes minify-all-cli -s ./dist-pre -d ./dist-min && ls -lah ./dist-pre && ls -lah ./dist-min",
     "test": "mocha"
   },
   "repository": {
@@ -31,6 +33,6 @@
   },
   "homepage": "https://github.com/eraeco/joydb#readme",
   "dependencies": {
-    "gun": "~>0.2020.1232"
+    "gun": "~>0.2020.1237"
   }
 }
